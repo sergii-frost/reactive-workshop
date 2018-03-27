@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context="se.frost.rxgithub.MainActivity">
 
-    <com.pddstudio.highlightjs.HighlightJsView
-        android:id="@+id/jsonView"
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"/>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

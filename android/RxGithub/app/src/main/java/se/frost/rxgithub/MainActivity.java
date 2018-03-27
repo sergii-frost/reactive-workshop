@@ -1,32 +1,29 @@
 package se.frost.rxgithub;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.pddstudio.highlightjs.HighlightJsView;
-import com.pddstudio.highlightjs.models.Language;
-import com.pddstudio.highlightjs.models.Theme;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import se.frost.rxgithub.screen.GithubSearchUserFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.jsonView)
-    HighlightJsView jsonView;
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initJsonView();
+        initFragments();
     }
 
-    private void initJsonView() {
-        jsonView.setTheme(Theme.SOLARIZED_DARK);
-        jsonView.setHighlightLanguage(Language.JSON);
-        jsonView.setSource("{\"hello\":\"world\"}");
-        jsonView.reload();
+    private void initFragments() {
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.contentFrame, GithubSearchUserFragment.newInstance(), GithubSearchUserFragment.TAG)
+                .commitAllowingStateLoss();
+        getFragmentManager().executePendingTransactions();
     }
+
 }
