@@ -1,4 +1,4 @@
-package se.frost.rxgithub.screen;
+package se.frost.rxgithub.screen.ghsearch;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -17,12 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import se.frost.rxgithub.R;
 import se.frost.rxgithub.networking.NetworkManager;
-import se.frost.rxgithub.util.JsonUtil;
 
 /**
  * RxGithub
@@ -30,11 +27,13 @@ import se.frost.rxgithub.util.JsonUtil;
  * <p>
  * Copyright (c) 2018 Frost°. All rights reserved.
  */
-public class GithubSearchUserFragment extends Fragment {
+public class GithubSearchUserFragment extends Fragment implements GithubSearchView {
 
     public static final String TAG = GithubSearchUserFragment.class.getSimpleName();
 
     private final CompositeDisposable disposables = new CompositeDisposable();
+
+    private GithubSearchPresenter presenter;
 
     @BindView(R.id.jsonView)
     HighlightJsView jsonView;
@@ -57,14 +56,29 @@ public class GithubSearchUserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter = new GithubSearchPresenter(NetworkManager.getInstance().getGithubApiClient());
+        presenter.attachView(this);
         initJsonView();
         initBindings();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
         disposables.clear();
+        presenter.detachView();
+        super.onDestroyView();
+    }
+
+    @IGithubSearchView
+    @Override
+    public void updateWithSearchResult(String result) {
+        jsonView.setSource(result);
+    }
+
+    @IGithubSearchView
+    @Override
+    public void showError(Throwable error) {
+        jsonView.setSource("ERROR: " + error.getMessage());
     }
 
     private void initJsonView() {
@@ -77,23 +91,7 @@ public class GithubSearchUserFragment extends Fragment {
                 .filter(charSequence -> charSequence.length() > 3)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
-                .subscribe(this::search));
+                .subscribe(presenter::search));
     }
 
-    private void search(String user) {
-        disposables.add(NetworkManager.getInstance()
-                .getGithubApiClient()
-                .getUserJson(user)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSearchSuccess, this::onSearchError));
-    }
-
-    private void onSearchSuccess(String json) {
-        jsonView.setSource(JsonUtil.toPrettyFormat(json));
-    }
-
-    private void onSearchError(Throwable throwable) {
-        jsonView.setSource("ERROR: " + throwable.getMessage());
-    }
 }

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
-import se.frost.rxgithub.screen.GithubSearchUserFragment;
+import se.frost.rxgithub.screen.ghsearch.GithubSearchUserFragment;
 
 public class MainActivity extends AppCompatActivity {
 
