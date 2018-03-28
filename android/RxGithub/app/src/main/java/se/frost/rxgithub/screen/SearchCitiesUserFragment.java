@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ public class SearchCitiesUserFragment extends Fragment {
 
     long time = System.currentTimeMillis();
 
+    boolean shouldContinueSearch = true;
+
     public static SearchCitiesUserFragment newInstance() {
         return new SearchCitiesUserFragment();
     }
@@ -76,8 +79,8 @@ public class SearchCitiesUserFragment extends Fragment {
 
     private void setupBindings() {
         RxTextView.textChanges(searchEditText)
-                .filter(charSequence -> charSequence.length() > 1)
-                .debounce(10, TimeUnit.MILLISECONDS)
+                .filter(charSequence -> charSequence.length() > 0)
+                .debounce(200, TimeUnit.MILLISECONDS) // Test delay on text change event
                 .map(CharSequence::toString)
                 .map(String::toLowerCase)
                 .subscribeOn(Schedulers.io())
@@ -113,31 +116,40 @@ public class SearchCitiesUserFragment extends Fragment {
     }
 
     private void searchCities(String query) {
+        shouldContinueSearch = false;
+        shouldContinueSearch = true;
         time = System.currentTimeMillis();
         System.out.println("Time1 " + (System.currentTimeMillis()-time));
         // Clear text
         resultTextView.setText("");
         // Async filtering to joined string
-        Observable.fromArray(cities)
-                .filter(city -> city.city.toLowerCase().contains(query))
-                // Concat city item to string
-                .flatMap(city -> Observable.just(String.format("%s in %s", city.city, city.state)))
-                // Grab to list so one event fires
-                .toList()
-                // Map to one string
-                .map(item -> TextUtils.join("\n", item))
-                // Set worker thread and result thread
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                // Send result to method
-                .subscribe(this::addCities);
+        disposables.clear();
+        disposables.add(
+            Observable.fromArray(cities)
+                    // Cancel
+                    .takeWhile(observer -> shouldContinueSearch)
+                    .filter(city -> city.city.toLowerCase().contains(query))
+                    // Concat city item to string
+                    .flatMap(city -> Observable.just(String.format("%s in %s", city.city, city.state)))
+                    // Grab to list so one event fires
+                    .toList()
+                    //.delay(3000, TimeUnit.MILLISECONDS) // Test delay for subscriber
+                    // Map to one string
+                    .map(item -> TextUtils.join("\n", item))
+                    // Set worker thread and result thread
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    // Send result to method
+                    .subscribe(this::addCities)
+        );
     }
 
     private void addCities(String cities) {
+        Log.d(this.getClass().getSimpleName(), "addCities");
         if (cities.isEmpty()) {
             resultTextView.setText("No city found 💩");
         } else {
-            resultTextView.setText(cities);
+            resultTextView.setText(cities); // Might be heavy on rendering
         }
     }
 
