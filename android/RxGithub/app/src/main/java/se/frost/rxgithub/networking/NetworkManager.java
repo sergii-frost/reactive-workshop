@@ -17,7 +17,7 @@ import se.frost.rxgithub.BuildConfig;
  */
 public class NetworkManager {
 
-    private GithubApiClient githubApiClient;
+    private ApiClient apiClient;
 
     private static volatile NetworkManager instance = null;
 
@@ -33,23 +33,23 @@ public class NetworkManager {
         return instance;
     }
 
-    public GithubApiClient getGithubApiClient() {
-        return githubApiClient;
+    public ApiClient getApiClient() {
+        return apiClient;
     }
 
     private NetworkManager() {
-        githubApiClient = buildApiClient();
+        apiClient = buildApiClient();
     }
 
-    private GithubApiClient buildApiClient() {
-        return new GithubApiClient(new Retrofit.Builder()
-                .baseUrl("https://api.github.com")
+    private ApiClient buildApiClient() {
+        return new ApiClient(new Retrofit.Builder()
+                .baseUrl("https://gist.githubusercontent.com")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(buildOkHttpClient())
                 .build()
-                .create(GithubApi.class)
+                .create(Api.class)
         );
     }
 

@@ -2,9 +2,11 @@ package se.frost.rxgithub.model;
 
 /**
  * RxGithub
- * Created by Sergii Nezdolii on 2018-03-26.
+ * Created by Manne Öhlund on 2018-03-28.
  * <p>
  * Copyright (c) 2018 Frost°. All rights reserved.
  */
-public class User {
+public class City {
+    public String city;
+    public String state;
 }

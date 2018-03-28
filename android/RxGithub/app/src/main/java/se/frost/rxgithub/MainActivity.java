@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
-import se.frost.rxgithub.screen.GithubSearchUserFragment;
+import se.frost.rxgithub.screen.SearchCitiesUserFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private void initFragments() {
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.contentFrame, GithubSearchUserFragment.newInstance(), GithubSearchUserFragment.TAG)
+                .add(R.id.contentFrame, SearchCitiesUserFragment.newInstance(), SearchCitiesUserFragment.TAG)
                 .commitAllowingStateLoss();
         getFragmentManager().executePendingTransactions();
     }
