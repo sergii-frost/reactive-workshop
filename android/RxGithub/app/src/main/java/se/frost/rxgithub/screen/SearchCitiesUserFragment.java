@@ -3,6 +3,7 @@ package se.frost.rxgithub.screen;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ public class SearchCitiesUserFragment extends Fragment {
     EditText searchEditText;
 
     City[] cities;
+
+    long time = System.currentTimeMillis();
 
     public static SearchCitiesUserFragment newInstance() {
         return new SearchCitiesUserFragment();
@@ -110,25 +113,35 @@ public class SearchCitiesUserFragment extends Fragment {
     }
 
     private void searchCities(String query) {
+        time = System.currentTimeMillis();
+        System.out.println("Time1 " + (System.currentTimeMillis()-time));
         // Clear text
         resultTextView.setText("");
-        // Async filtering
+        // Async filtering to joined string
         Observable.fromArray(cities)
                 .filter(city -> city.city.toLowerCase().contains(query))
+                // Concat city item to string
+                .flatMap(city -> Observable.just(String.format("%s in %s", city.city, city.state)))
+                // Grab to list so one event fires
+                .toList()
+                // Map to one string
+                .map(item -> TextUtils.join("\n", item))
+                // Set worker thread and result thread
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //.toList()
-                .subscribe(this::addCities, this::noItemsFound, this::onSearchDone);
+                // Send result to method
+                .subscribe(this::addCities);
     }
 
-    private void addCities(City city) {
-        resultTextView.append(String.format("%s in %s\n", city.city, city.state));
+    private void addCities(String cities) {
+        if (cities.isEmpty()) {
+            resultTextView.setText("No city found 💩");
+        } else {
+            resultTextView.setText(cities);
+        }
     }
 
-    private void noItemsFound(Throwable throwable) {
-        resultTextView.setText("No city found 💩");
-    }
-
+    // TODO: impl progress?
     private void onSearchDone() {
         Toast.makeText(getActivity(), "Search done", Toast.LENGTH_SHORT).show();
     }
