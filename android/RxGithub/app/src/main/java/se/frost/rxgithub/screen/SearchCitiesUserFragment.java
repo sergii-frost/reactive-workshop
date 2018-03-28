@@ -74,9 +74,11 @@ public class SearchCitiesUserFragment extends Fragment {
     private void setupBindings() {
         RxTextView.textChanges(searchEditText)
                 .filter(charSequence -> charSequence.length() > 1)
-                .debounce(300, TimeUnit.MILLISECONDS)
+                .debounce(10, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .map(String::toLowerCase)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::searchCities);
     }
 
