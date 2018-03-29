@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		052388790841B50B85F6CD33 /* Pods_RxGithub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA91F834A3C371F5CB24D80 /* Pods_RxGithub.framework */; };
 		457622C4206CCFE6000B0FC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457622C3206CCFE6000B0FC9 /* AppDelegate.swift */; };
 		457622C6206CCFE6000B0FC9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457622C5206CCFE6000B0FC9 /* ViewController.swift */; };
 		457622C9206CCFE6000B0FC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 457622C7206CCFE6000B0FC9 /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2EA91F834A3C371F5CB24D80 /* Pods_RxGithub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxGithub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C1229CDCD50F5634339E1C4 /* Pods-RxGithub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxGithub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxGithub/Pods-RxGithub.debug.xcconfig"; sourceTree = "<group>"; };
 		457622C0206CCFE6000B0FC9 /* RxGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		457622C3206CCFE6000B0FC9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		457622C5206CCFE6000B0FC9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,7 @@
 		457622CA206CCFE6000B0FC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		457622CD206CCFE6000B0FC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		457622CF206CCFE6000B0FC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF7D1DA48CF3C990A71C7B45 /* Pods-RxGithub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxGithub.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxGithub/Pods-RxGithub.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				052388790841B50B85F6CD33 /* Pods_RxGithub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2AA7E7731A269C019D844322 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3C1229CDCD50F5634339E1C4 /* Pods-RxGithub.debug.xcconfig */,
+				DF7D1DA48CF3C990A71C7B45 /* Pods-RxGithub.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		457622B7206CCFE6000B0FC9 = {
 			isa = PBXGroup;
 			children = (
 				457622C2206CCFE6000B0FC9 /* RxGithub */,
 				457622C1206CCFE6000B0FC9 /* Products */,
+				2AA7E7731A269C019D844322 /* Pods */,
+				D2A0788E588578BC5E345370 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +80,14 @@
 			path = RxGithub;
 			sourceTree = "<group>";
 		};
+		D2A0788E588578BC5E345370 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EA91F834A3C371F5CB24D80 /* Pods_RxGithub.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 457622D2206CCFE6000B0FC9 /* Build configuration list for PBXNativeTarget "RxGithub" */;
 			buildPhases = (
+				6FBBE8C7A2933734671AA2FD /* [CP] Check Pods Manifest.lock */,
 				457622BC206CCFE6000B0FC9 /* Sources */,
 				457622BD206CCFE6000B0FC9 /* Frameworks */,
 				457622BE206CCFE6000B0FC9 /* Resources */,
+				4F33EF9BE4B74A946C24F2A0 /* [CP] Embed Pods Frameworks */,
+				BF0B8EFFD06927AF25D75A06 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,6 +157,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4F33EF9BE4B74A946C24F2A0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RxGithub/Pods-RxGithub-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RxGithub/Pods-RxGithub-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6FBBE8C7A2933734671AA2FD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RxGithub-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF0B8EFFD06927AF25D75A06 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RxGithub/Pods-RxGithub-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		457622BC206CCFE6000B0FC9 /* Sources */ = {
@@ -272,6 +355,7 @@
 		};
 		457622D3206CCFE6000B0FC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C1229CDCD50F5634339E1C4 /* Pods-RxGithub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -287,6 +371,7 @@
 		};
 		457622D4206CCFE6000B0FC9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF7D1DA48CF3C990A71C7B45 /* Pods-RxGithub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
